@@ -193,6 +193,11 @@
 #define STM32_PLLN_VALUE                    336
 #define STM32_PLLP_VALUE                    2
 #define STM32_PLLQ_VALUE                    7
+#elif STM32_HSECLK == 25000000U
+#define STM32_PLLM_VALUE                    25
+#define STM32_PLLN_VALUE                    336
+#define STM32_PLLP_VALUE                    2
+#define STM32_PLLQ_VALUE                    7
 #else
 #error "Unsupported F4 HSE clock"
 #endif
@@ -231,8 +236,31 @@
 #else
 #error "Unsupported F4 HSE clock"
 #endif
+#elif HAL_EXPECTED_SYSCLOCK == 192000000
+#if STM32_HSECLK == 0U
+#undef STM32_HSE_ENABLED
+#undef STM32_HSI_ENABLED
+#undef STM32_PLLSRC
+#define STM32_HSE_ENABLED                   FALSE
+#define STM32_HSI_ENABLED                   TRUE
+#define STM32_PLLSRC                        STM32_PLLSRC_HSI
+#define STM32_PLLM_VALUE                    16
+#define STM32_PLLN_VALUE                    384
+#define STM32_PLLP_VALUE                    2
+#define STM32_PLLQ_VALUE                    8
+#elif STM32_HSECLK == 8000000U
+#define STM32_PLLM_VALUE                    8
+#define STM32_PLLN_VALUE                    384
+#define STM32_PLLP_VALUE                    2
+#define STM32_PLLQ_VALUE                    8
+#elif STM32_HSECLK == 25000000U
+#define STM32_PLLM_VALUE                    25
+#define STM32_PLLN_VALUE                    384
+#define STM32_PLLP_VALUE                    2
+#define STM32_PLLQ_VALUE                    8
 #else
 #error "Unsupported F4 EXPECTED_CLOCK"
+#endif
 #endif // HAL_EXPECTED_SYSCLOCK
 #endif // MCU
 #endif // HAL_CUSTOM_CLOCK_TREE
